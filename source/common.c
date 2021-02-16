@@ -2,13 +2,11 @@
 
 jmp_buf exitJmp;
 
-SDL_Window *WINDOW;
-SDL_Surface *WINDOW_SURFACE;
-SDL_Renderer *RENDERER;
-TTF_Font *Roboto_large, *Roboto, *Roboto_small, *Roboto_OSK;
-
 int MENU_DEFAULT_STATE;
 int BROWSE_STATE;
 
-char cwd[512];
-char fileName[255];
+char cwd[FS_MAX_PATH];
+
+FsFileSystem *fs;
+FsFileSystem devices[4];
+u64 total_storage = 0, used_storage = 0;

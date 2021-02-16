@@ -1,44 +1,41 @@
 #ifndef NX_SHELL_COMMON_H
 #define NX_SHELL_COMMON_H
 
+#include <switch.h>
 #include <setjmp.h>
-#include <SDL.h>
-#include <SDL2/SDL2_gfxPrimitives.h> 
-#include <SDL2/SDL_image.h>
-#include <SDL2/SDL_mixer.h>
-#include <SDL_ttf.h>
 
+#define ROOT_PATH "/"
+#define START_PATH ROOT_PATH
+#define MAX_FILES 2048
+#define FILES_PER_PAGE 8
 #define wait(msec) svcSleepThread(10000000 * (s64)msec)
 
 extern jmp_buf exitJmp;
 
-extern SDL_Window *WINDOW;
-extern SDL_Surface *WINDOW_SURFACE;
-extern SDL_Renderer *RENDERER;
-extern TTF_Font *Roboto_large, *Roboto, *Roboto_small, *Roboto_OSK;
-
-#define ROOT_PATH "/"
-#define START_PATH ROOT_PATH
-#define MAX_FILES 1024
-#define FILES_PER_PAGE 8
-
 extern int MENU_DEFAULT_STATE;
 extern int BROWSE_STATE;
+extern FsFileSystem *fs;
+extern FsFileSystem devices[4];
+extern u64 total_storage, used_storage;
 
-#define MENU_STATE_HOME       0
-#define MENU_STATE_OPTIONS    1
-#define MENU_STATE_MENUBAR    2
-#define MENU_STATE_SETTINGS   3
-#define MENU_STATE_FTP        4
-#define MENU_STATE_SORT       5
-#define MENU_STATE_THEMES     6
-#define MENU_STATE_DIALOG     7
-#define MENU_STATE_PROPERTIES 8
+enum MENU_STATES {
+    MENU_STATE_HOME = 0,
+    MENU_STATE_OPTIONS = 1,
+    MENU_STATE_MENUBAR = 2,
+    MENU_STATE_SETTINGS = 3,
+    MENU_STATE_FTP = 4,
+    MENU_STATE_DELETE_DIALOG = 5,
+    MENU_STATE_PROPERTIES = 6
+};
 
-#define STATE_SD   0
-#define STATE_NAND 1
+enum BROWSE_STATES {
+    STATE_SD = 0,
+    STATE_PRODINFOF = 1,
+    STATE_SAFE = 2,
+    STATE_USER = 3,
+    STATE_SYSTEM = 4
+};
 
-extern char cwd[512];
-extern char fileName[255];
+extern char cwd[FS_MAX_PATH];
 
 #endif
